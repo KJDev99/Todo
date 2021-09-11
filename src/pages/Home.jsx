@@ -1,0 +1,186 @@
+import React, {useEffect} from 'react'
+const currencies = [
+    "AED",
+    "AFN",
+    "ALL",
+    "AMD",
+    "ANG",
+    "AOA",
+    "ARS",
+    "AUD",
+    "AWG",
+    "AZN",
+    "BAM",
+    "BBD",
+    "BDT",
+    "BGN",
+    "BHD",
+    "BIF",
+    "BMD",
+    "BND",
+    "BOB",
+    "BRL",
+    "BSD",
+    "BTN",
+    "BWP",
+    "BZD",
+    "CAD",
+    "CDF",
+    "CHF",
+    "CLF",
+    "CLP",
+    "CNH",
+    "CNY",
+    "COP",
+    "CUP",
+    "CVE",
+    "CZK",
+    "DJF",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EGP",
+    "ERN",
+    "ETB",
+    "EUR",
+    "FJD",
+    "FKP",
+    "GBP",
+    "GEL",
+    "GHS",
+    "GIP",
+    "GMD",
+    "GNF",
+    "GTQ",
+    "GYD",
+    "HKD",
+    "HNL",
+    "HRK",
+    "HTG",
+    "HUF",
+    "IDR",,
+    "ILS",
+    "INR",
+    "IQD",
+    "IRR",,
+    "ISK",
+    "JMD",
+    "JOD",
+    "JPY",
+    "KES",
+    "KGS",
+    "KHR",
+    "KMF",
+    "KPW",
+    "KRW",
+    "KWD",
+    "KYD",
+    "KZT",
+    "LAK",
+    "LBP",
+    "LKR",
+    "LRD",
+    "LSL",
+    "LYD",
+    "MAD",
+    "MDL",
+    "MGA",
+    "MKD",
+    "MMK",
+    "MNT",
+    "MOP",
+    "MRU",
+    "MUR",
+    "MVR",
+    "MWK",
+    "MXN",
+    "MYR",
+    "MZN",
+    "NAD",
+    "NGN",
+    "NOK",
+    "NPR",
+    "NZD",
+    "OMR",
+    "PAB",
+    "PEN",
+    "PGK",
+    "PHP",
+    "PKR",
+    "PLN",
+    "PYG",
+    "QAR",
+    "RON",
+    "RSD",
+    "RUB",
+    "RWF",
+    "SAR",
+    "SCR",
+    "SDG",
+    "SEK",
+    "SGD",
+    "SHP",
+    "SLL",,
+    "SOS",
+    "SRD",
+    "SYP",
+    "SZL",
+    "THB",
+    "TJS",
+    "TMT",
+    "TND",
+    "TOP",
+    "TRY",
+    "TTD",
+    "TWD",
+    "TZS",
+    "UAH",
+    "UGX",
+    "USD",
+    "UYU",
+    "UZS",,
+    "VND",,
+    "VUV",
+    "WST",
+    "XAF",
+    "XCD",
+    "XDR",
+    "XOF",
+    "XPF",
+    "YER",
+    "ZAR",
+    "ZMW",
+]
+
+function Home() {
+    let currency;
+    useEffect(async() => {
+        const response = await fetch("https://api.fastforex.io/fetch-all?from=USD&api_key=ae7e7b52fb-9f3df4ac2e-qqo482")
+        const currency = await response.json()
+        const input = document.querySelector('.home__input')
+        const homeResult = document.querySelector('.home__result')
+        const type = document.querySelector('.currency')
+        input.oninput = ()=>{
+            const prevValue = input.value
+            const newValue = prevValue * currency.results[type.value];
+            homeResult.innerText = `${prevValue} USD on exchange to ${type.value} will be ${newValue}`
+        }
+    }, [])
+
+    return (
+        <main className="container home">
+            <h1>Home</h1>
+            <form className="home__form" >
+                <input className="home__input" type="text" placeholder="Enter your USD value to convert it" />
+                <select className = "currency">
+                    {currencies.map(currency => <option value={currency}>{currency}</option>)}
+                </select>
+            </form>
+            <p className="home__result">
+                152000 sum on exchange to USD will be 15.2 USD
+            </p>
+        </main>
+    )
+}
+
+export default Home
